@@ -5,6 +5,18 @@ import torchvision.transforms as transforms
 import random
 from PIL import Image
 import streamlit as st
+from io import BytesIO
+buf = BytesIO()
+
+
+st.title("Captcha Generator")
+st.header("Captcha Generation Using DCGAN")
+st.write("Dataset Available At: https://www.kaggle.com/datasets/fanbyprinciple/captcha-images")
+st.write("In GANs, there is a generator and a discriminator. The Generator generates fake samples of data\n"
+         "and tries to fool the Discriminator. The Discriminator, on the other hand, tries to distinguish between the\n"
+         "real and fake samples. The Generator and the Discriminator are both Neural Networks and they both run in\n"
+         "competition with each other in the training phase. The steps are repeated several times and in this,\n"
+         "the Generator and Discriminator get better and better in their respective jobs after each repetition.")
 
 
 class Generator(nn.Module):
@@ -52,10 +64,11 @@ transform2 = transforms.Compose([transforms.Resize([640, 800]), transforms.ToPIL
 
 make_single = st.button("Generate Captcha")
 make_multiple = st.checkbox("Make Multiple Captcha")
-# C:/Users/harsh/PycharmProjects/Harshvir_S/HackGDSC/Captcha_generator.py
+
 if make_single:
     random_img = torch.randn((batch_size, noise_dim, 1, 1)).to(device)
-    num = random.randint(0, 64)
+    print(random_img.shape)
+    num = random.randint(0, 63)
     img = model(random_img)
     # print(img.shape)
     grid = make_grid(img)
@@ -66,9 +79,15 @@ if make_single:
     grid = transform2(grid)
     if make_multiple:
         st.image(grid)
+        grid.save(buf, format="JPEG")
+        byte_im = buf.getvalue()
     else:
         st.image(img)
+        img.save(buf, format="JPEG")
+    btn = st.download_button(
+        label="Download Image",
+        data=byte_im,
+        file_name="Generated Captcha.png",
+        mime="image/jpeg",
+    )
 
-# print(img.shape)
-# cv2.imshow("captcha", img)
-# cv2.waitKey(0)
