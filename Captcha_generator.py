@@ -55,7 +55,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model = Generator()
 batch_size = 64
 noise_dim = 100
-checkpoint = torch.load("HackGDSC/Generator4.pth.tar", map_location=torch.device('cpu'))
+checkpoint = torch.load("Generator4.pth.tar", map_location=torch.device('cpu'))
 model.load_state_dict(checkpoint['model_state_dict'])
 model.eval()
 transform1 = transforms.Compose([transforms.Resize([72, 240]), transforms.ToPILImage()])
