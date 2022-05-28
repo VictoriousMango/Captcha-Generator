@@ -62,6 +62,7 @@ model.eval()
 transform1 = transforms.Compose([transforms.Resize([72, 216]), transforms.ToPILImage()])
 transform2 = transforms.Compose([transforms.Resize([640, 800]), transforms.ToPILImage()])
 
+st.markdown("All Captcha are **_4_ Characters Long.**")
 make_single = st.button("Generate Captcha")
 make_multiple = st.checkbox("Make Multiple Captcha")
 
@@ -90,4 +91,3 @@ if make_single:
         file_name="Generated Captcha.png",
         mime="image/jpeg",
     )
-
