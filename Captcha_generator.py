@@ -68,7 +68,7 @@ make_multiple = st.checkbox("Make Multiple Captcha")
 
 if make_single:
     random_img = torch.randn((batch_size, noise_dim, 1, 1)).to(device)
-    print(random_img.shape)
+#     print(random_img.shape)
     num = random.randint(0, 63)
     img = model(random_img)
     # print(img.shape)
