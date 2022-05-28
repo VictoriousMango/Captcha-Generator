@@ -55,11 +55,10 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model = Generator()
 batch_size = 64
 noise_dim = 100
-checkpoint = torch.load("C:/Users/harsh/PycharmProjects/Harshvir_S/HackGDSC/Generator4.pth.tar",
-                        map_location=torch.device('cpu'))
+checkpoint = torch.load("HackGDSC/Generator4.pth.tar", map_location=torch.device('cpu'))
 model.load_state_dict(checkpoint['model_state_dict'])
 model.eval()
-transform1 = transforms.Compose([transforms.Resize([72, 216]), transforms.ToPILImage()])
+transform1 = transforms.Compose([transforms.Resize([72, 240]), transforms.ToPILImage()])
 transform2 = transforms.Compose([transforms.Resize([640, 800]), transforms.ToPILImage()])
 
 st.markdown("All Captcha are **_4_ Characters Long.**")
@@ -92,4 +91,3 @@ if make_single:
         file_name="Generated Captcha.png",
         mime="image/jpeg",
     )
-
